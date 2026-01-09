@@ -1,0 +1,61 @@
+@model Book2Screen.Models.Actor
+
+@{
+    ViewData["Title"] = "Details";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                  User.Identity.Name == "admin" &&
+                  User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+<div class="details-container">
+
+
+    <div>
+
+        <hr />
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Birthdate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Movie)
+            </dt>
+            <dd>
+                @if (Model.Movie != null)
+                {
+                    <a asp-action="Details" asp-controller="Movie" asp-route-id="@Model.Movie.MovieId">
+                        @Model.Movie.Title
+                    </a>
+                }
+                else
+                {
+                    <span>No Movie</span>
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <div class="back-link-container">
+        @if (isAdmin)
+        {
+            <a class="edit-link" asp-action="Edit" asp-route-id="@Model?.ActorsId">Edit</a>
+        }
+        <a class="back-link" asp-action="Index">Back to List</a>
+    </div>
+</div>

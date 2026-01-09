@@ -1,0 +1,53 @@
+@model IEnumerable<Book2Screen.Models.Actor>
+
+@{
+    ViewData["Title"] = "Index";
+    var searchString = ViewData["SearchString"] as string ?? "";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                  User.Identity.Name == "admin" &&
+                  User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+@*<form asp-controller="Actor" asp-action="Index" method="get">
+        <input type="text" name="searchString" placeholder="Actor Name" value="@searchString" />
+        <button type="submit">Search</button>
+    </form>*@
+
+<div class="actor-list-container">
+    <ul class="actor-list">
+        @foreach (var actor in Model)
+        {
+            <li class="actor-list-item">
+                <span class="actor-name">@actor.Name</span>
+                <span class="actor-birthdate">
+                    @if (actor.Birthdate.HasValue)
+                    {
+                        @actor.Birthdate.Value.ToString("d")
+                    }
+                    else
+                    {
+                        <a>N/A</a>
+                        
+                    }
+                    <span class="actor-detail">
+                        <a asp-action="Details" asp-route-id="@actor.ActorsId">Details</a>
+                    </span>
+</li>
+        }
+    </ul>
+</div>
+

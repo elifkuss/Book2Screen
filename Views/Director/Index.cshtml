@@ -1,0 +1,58 @@
+@model IEnumerable<Book2Screen.Models.Director>
+
+@{
+    ViewData["Title"] = "Directors";
+    var searchString = ViewData["SearchString"] as string ?? "";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                 User.Identity.Name == "admin" &&
+                 User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+@*<div class="search-form-container">
+    <form asp-controller="Director" asp-action="Index" method="get" class="search-form">
+        <input type="text" name="searchString" placeholder="Director Name" value="@searchString" />
+        <button type="submit">Search</button>
+    </form>
+</div>*@
+
+
+
+<div class="director-list-container">
+    <ul class="director-list">
+        @foreach (var director in Model)
+        {
+            <li class="director-list-item">
+                <span class="director-name">@director.Name</span>
+                <span class="director-birthdate">
+                    @if (director.Birthdate.HasValue)
+                    {
+                        @director.Birthdate.Value.ToString("d")
+                    }
+                    else
+                    {
+                        <a>N/A</a>
+                    }
+                </span>
+                <span class="director-works">@director.Works</span>
+                <span class="director-detail">
+                    <a asp-action="Details" asp-route-id="@director.DirectorId">Details</a>
+                </span>
+            </li>
+        }
+    </ul>
+</div>

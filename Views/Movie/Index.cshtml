@@ -1,0 +1,80 @@
+@model IEnumerable<Book2Screen.Models.Movie>
+
+
+
+@{
+    ViewData["Title"] = "Index";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                  User.Identity.Name == "admin" &&
+                  User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+    var searchTerm = ViewData["SearchTerm"] as string;
+}
+
+<style>
+
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+
+
+<div class="container">
+
+    @*<h2>Movies</h2>*@
+
+    @if (isAdmin)
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+
+
+    <div class="search-form-container">
+        <form asp-action="Index" method="get" class="search-form">
+            <input type="text" placeholder="Movie Name" name="searchTerm" value="@searchTerm" />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+
+
+
+    <ul class="movies-list">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="movie-card">
+                    <a asp-action="Details" asp-route-id="@item.MovieId">
+                        <figure class="card-banner">
+                            <img src="~/filmlane/assets/images/@item.Photopath" alt="@item.Title movie poster">
+                        </figure>
+                    </a>
+
+                    <div class="title-wrapper">
+                        <a asp-action="Details" asp-route-id="@item.MovieId">
+                            <h3 class="card-title">@item.Title</h3>
+                        </a>
+
+                        <time datetime="@item.Releasedate?.ToString("yyyy")">@item.Releasedate?.Year</time>
+                    </div>
+
+                    <div class="card-meta">
+                        <div class="badge badge-outline">HD</div>
+
+                        <div class="duration">
+                            <ion-icon name="time-outline"></ion-icon>
+                            <time datetime="@item.Movieduration.ToString()">@item.Movieduration min</time>
+                        </div>
+
+                        <div class="rating">
+                            <ion-icon name="star"></ion-icon>
+                            <data>@item.Score</data>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

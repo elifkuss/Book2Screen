@@ -1,0 +1,60 @@
+@model IEnumerable<Book2Screen.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+    var searchTerm = ViewData["SearchTerm"] as string;
+    var isAdmin = User.Identity.IsAuthenticated &&
+                 User.Identity.Name == "admin" &&
+                 User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+
+    }
+</style>
+
+
+
+
+    @if (isAdmin)
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+
+    <!-- Arama Formu -->
+    <!--<form asp-action="Index" method="get">
+        <p>
+            <input type="text" placeholder=" Book Title " name="searchTerm" value="@searchTerm" />
+            <input type="submit" value="Search" />
+        </p>
+    </form>-->
+
+    <div class="book-list-container">
+        <ul class="book-list">
+            @foreach (var book in Model)
+            {
+                <li class="book-list-item">
+                    <div class="book-info">
+                        <span class="book-title">@book.Name</span>
+                        <span class="book-genre">@book.Genre</span>
+                    </div>
+                    <span class="summary">@book.Summary</span>
+                    <span class="book-detail">
+                        <a asp-action="Details" asp-route-id="@book.BookId">Details</a>
+                    </span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div>
+        @if (isAdmin)
+        {
+            <a asp-action="Create">Create New</a>
+        }
+    </div>
+

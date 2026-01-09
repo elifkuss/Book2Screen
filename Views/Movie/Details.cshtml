@@ -1,0 +1,257 @@
+@model Book2Screen.Models.Movie
+
+@{
+    ViewData["Title"] = "Details";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                 User.Identity.Name == "admin" &&
+                 User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+@*<style>
+
+        body {
+            margin: 0;
+            padding-top: 150px;
+        }
+    </style>
+
+    <h1>Details</h1>
+
+    <div>
+        <h4>Movie</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Score)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Score)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Movietype)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Movietype)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Releasedate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Releasedate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Movieduration)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Movieduration)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Budget)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Budget)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Boxofficerevenue)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Boxofficerevenue)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Book)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Book.BookId)
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Director)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Director != null)
+                {
+                    <a asp-action="Details" asp-controller="Director" asp-route-id="@Model.Director.DirectorId">
+                        @Model.Director.Name
+                    </a>
+                }
+                else
+                {
+                    <span>No Director</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <ul>
+        @foreach (var actor in Model.Actors)
+        {
+            <li>@actor.Name</li>
+        }
+    </ul>
+
+    <h3>Comments</h3>
+
+    <ul>
+        @if (Model.Comments != null && Model.Comments.Any())
+        {
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    <strong>@comment.Id</strong>: @comment.CommentText
+                </li>
+            }
+        }
+        else
+        {
+            <p>No comments yet.</p>
+        }
+    </ul>
+
+    <h3>Add a Comment</h3>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="Create" asp-controller="Comment" method="post">
+            <input type="hidden" name="movieId" value="@Model.MovieId" />
+            <input type="hidden" name="bookId" value="" />
+            <textarea name="commentText" rows="4" cols="50"></textarea>
+            <br />
+            <input type="submit" value="Add Comment" />
+        </form>
+    }
+    else
+    {
+        <p>You need to <a asp-controller="User" asp-action="Login">login</a> to add a comment.</p>
+    }
+
+    <div>
+        @if (isAdmin)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.MovieId">Edit</a>
+        }
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+<main>
+    <article>
+        <!-- #MOVIE DETAIL -->
+        <section class="movie-detail">
+            <div class="container">
+                <figure class="movie-detail-banner">
+                    <img src="~/filmlane/assets/images/@Model.Photopath" alt="@Model.Title movie poster">
+                    <button class="play-btn">
+                        <ion-icon name="play-circle-outline"></ion-icon>
+                    </button>
+                </figure>
+
+                <div class="movie-detail-content">
+                    <p class="detail-subtitle">Movie Detail</p>
+
+                    <h1 class="h1 detail-title">
+                        @Model.Title
+                    </h1>
+
+                    <div class="meta-wrapper">
+                        <div class="badge-wrapper">
+                            <div class="badge badge-fill">PG 13</div>
+                            <div class="badge badge-outline">HD</div>
+                        </div>
+
+                        <div class="genre-wrapper">
+                            <a href="#">@Model.Movietype</a>
+                        </div>
+
+                        <div class="date-time">
+                            <div>
+                                <ion-icon name="calendar-outline"></ion-icon>
+                                <time datetime="@Model.Releasedate?.ToString("yyyy")">@Model.Releasedate?.Year</time>
+                            </div>
+
+                            <div>
+                                <ion-icon name="time-outline"></ion-icon>
+                                <time datetime="PT@Model.Movieduration">@Model.Movieduration min</time>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="details-actions">
+                        <button class="share">
+                            <ion-icon name="share-social"></ion-icon>
+                            <span>Share</span>
+                        </button>
+
+                        <div class="title-wrapper">
+                            <p class="title">Prime Video</p>
+                            <p class="text">Streaming Channels</p>
+                        </div>
+
+                        <button class="btn btn-primary">
+                            <ion-icon name="play"></ion-icon>
+                            <span>Watch Now</span>
+                        </button>
+                    </div>
+
+                    <a href="~/filmlane/assets/images/@Model.Photopath" download class="download-btn">
+                        <span>Download</span>
+                        <ion-icon name="download-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- #CAST -->
+        <!--<section class="movie-cast">
+        <div class="container">
+            <h3>Cast</h3>
+            <ul>
+                @foreach (var actor in Model.Actors)
+                {
+                    <li>@actor.Name</li>
+                }
+            </ul>
+        </div>
+    </section>-->
+        <section class="comments-section">
+            <h2>Comments</h2>
+            <ul>
+                @if (Model.Comments != null && Model.Comments.Any())
+                {
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="comment">
+                            <span class="user-id">@comment.Id</span>
+                            <span class="comment-text">@comment.CommentText</span>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <p>No comments yet.</p>
+                }
+            </ul>
+
+            <div class="add-comment-section">
+                <h3>Add a Comment</h3>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-action="Create" asp-controller="Comment" method="post">
+                        <input type="hidden" name="movieId" value="@Model.MovieId" />
+                        <input type="hidden" name="bookId" value="" />
+                        <textarea name="commentText" rows="4" cols="50" placeholder="Write your comment here..."></textarea>
+                        <br />
+                        <button type="submit" class="btn btn-primary">
+                            <ion-icon name="send-outline"></ion-icon>
+                            <span>Add Comment</span>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <p>You need to <a asp-controller="User" asp-action="Login">login</a> to add a comment.</p>
+                }
+            </div>
+        </section>

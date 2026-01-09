@@ -1,0 +1,72 @@
+@model Book2Screen.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                 User.Identity.Name == "admin" &&
+                 User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+
+<div class="details-container">
+
+    <div>
+
+        <hr />
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.Genre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Genre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Summary)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Summary)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Orjlanguage)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Orjlanguage)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
+            <dd>
+                <a href="@Url.Action("Details", "Author", new { id = Model.Author.AuthorId })">
+                    @Model.Author.Name
+                </a>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @if (isAdmin)
+        {
+            <a class="edit-link" asp-action="Edit" asp-route-id="@Model?.BookId">Edit</a>
+        }
+
+        <a class="back-link" asp-action="Index">Back to List</a>
+    </div>
+</div>

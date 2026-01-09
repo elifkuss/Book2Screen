@@ -1,0 +1,53 @@
+@model Book2Screen.Models.Director
+
+@{
+    ViewData["Title"] = "Details";
+    var isAdmin = User.Identity.IsAuthenticated &&
+                 User.Identity.Name == "admin" &&
+                 User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value == "admin@admin.com";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 150px;
+    }
+</style>
+
+
+<div class="details-container">
+
+
+    <div>
+
+        <hr />
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Birthdate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Birthdate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Works)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Works)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="back-link-container">
+        @if (isAdmin)
+        {
+            <a class="edit-link" asp-action="Edit" asp-route-id="@Model?.DirectorId">Edit</a>
+        }
+        <a class="back-link" asp-action="Index">Back to List</a>
+    </div>
+</div>

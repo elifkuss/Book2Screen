@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/IBook2Screen.styles.css" asp-append-version="true" />
+    <title>Book2Screen - Best movie collections</title>
+
+    <!--
+      - favicon
+    -->
+    <link rel="shortcut icon" href="~/filmlane/favicon.svg" type="image/svg+xml">
+
+
+
+
+    <!--
+      - custom css link
+    -->
+    <link rel="stylesheet" href="~/filmlane/assets/css/style.css">
+
+    <!--
+      - google font link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body id="top">
+
+    <!--
+      - #HEADER
+    -->
+
+    <header class="header" data-header>
+        <div class="container">
+            <a href="./index.html" class="logo no-click" style="display: flex; align-items: center; height: 100%;">
+                <img src="~/filmlane/assets/images/favicon.svg" alt="Icon" style="width: 24px; height: 24px; margin-right: 8px;">
+                <p class="hero-subtitle" style="color: white; margin: 0;">Book2Screen</p>
+            </a>
+
+
+            <div class="overlay" data-overlay></div>
+
+
+
+
+            <div class="header-actions">
+
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="navbar-item">
+                        <a class="btn btn-primary" asp-controller="Account" asp-action="Logout">LOG OUT</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="navbar-item">
+                        <a class="btn btn-primary" asp-controller="User" asp-action="Login">LOG IN</a>
+                    </li>
+
+                }
+
+            </div>
+
+            <button class="menu-open-btn" data-menu-open-btn>
+                <ion-icon name="reorder-two"></ion-icon>
+            </button>
+
+            <nav class="navbar" data-navbar>
+
+                <div class="navbar-top">
+
+                    <a href="./index.html" class="logo">
+                        <img src="~/filmlane/assets/images/logo.svg" alt="Filmlane logo">
+                    </a>
+
+                    <button class="menu-close-btn" data-menu-close-btn>
+                        <ion-icon name="close-outline"></ion-icon>
+                    </button>
+
+                </div>
+
+                <ul class="navbar-list">
+
+                    <li class="navbar-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
+                    <li>
+                    <li class="nav-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Actor" asp-action="Index">Actors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Author" asp-action="Index">Authors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" asp-area="" asp-controller="Director" asp-action="Index">Directors</a>
+                    </li>
+
+                </ul>
+
+                <ul class="navbar-social-list">
+
+                    <li>
+                        <a href="#" class="navbar-social-link">
+                            <ion-icon name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-social-link">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-social-link">
+                            <ion-icon name="logo-pinterest"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="navbar-social-link">
+                            <ion-icon name="logo-youtube"></ion-icon>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+    </header>
+
+    <style>
+        .no-click {
+            pointer-events: none;
+        }
+    </style>
+
+    @RenderBody()
+
+
+    <!--
+      - #FOOTER
+    -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+            <div class="container">
+
+
+                <div class="divider"></div>
+
+                <div class="quicklink-wrapper">
+
+                    <ul class="quicklink-list">
+
+                        <li>
+                            <a href="#" class="quicklink-link">Faq</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="quicklink-link">Help center</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="quicklink-link">Terms of use</a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="quicklink-link">Privacy</a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="social-list">
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-facebook"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-twitter"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-pinterest"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-linkedin"></ion-icon>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+
+                <p class="copyright">
+                    &copy; 2024 <a href="#"></a> All Rights Reserved
+                </p>
+
+                <img src="~/filmlane/assets/images/footer-bottom-img.png" alt="Online banking companies logo" class="footer-bottom-img">
+
+            </div>
+        </div>
+
+    </footer>
+
+
+
+
+
+    <!--
+      - #GO TO TOP
+    -->
+
+    <a href="#top" class="go-top" data-go-top>
+        <ion-icon name="chevron-up"></ion-icon>
+    </a>
+
+
+
+
+
+    <!--
+      - custom js link
+    -->
+    <script src="~/filmlane/assets/js/script.js"></script>
+
+    <!--
+      - ionicon link
+    -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+    <script src="~/filmlane/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/filmlane/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/filmlane/assets/js/site.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
