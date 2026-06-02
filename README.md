@@ -48,7 +48,7 @@ A web-based platform for tracking and analyzing literary-to-cinematic adaptation
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/Book2Screen.git
+git clone https://github.com/elifkuss/Book2Screen.git
 cd Book2Screen
 ```
 
